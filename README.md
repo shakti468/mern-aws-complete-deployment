@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Sample MERN with Microservices
 
 
@@ -25,3 +26,6 @@ npm start
 ```
 
 Note: This will run the frontend in the development server. To run in production, build the application by running the command `npm run build`
+=======
+# mern-aws-complete-deployment
+>>>>>>> 3d91308 (Initial commit)

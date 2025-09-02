@@ -13,7 +13,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main',
-                    url: 'https://github.com/YOURNAME/SampleMERNwithMicroservices.git'
+                    url: 'https://github.com/shakti468/mern-aws-complete-deployment.git'
             }
         }
 

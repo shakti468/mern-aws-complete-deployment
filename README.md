@@ -166,4 +166,74 @@ The push refers to repository [975050024946.dkr.ecr.ap-south-1.amazonaws.com/sha
 
 ------
 
+# CI Pipeline with Jenkins for MERN Microservices
+
+This explains how Jenkins is used to automate the build and push process
+for the **Sample MERN with Microservices** project.
+
+---
+
+## 📌 Overview
+
+Instead of manually building Docker images and pushing them to Amazon ECR, Jenkins
+automates the entire workflow:
+
+1. Clone the GitHub repository
+2. Build Docker images for:
+   - Hello Service
+   - Profile Service
+   - Frontend
+3. Authenticate with Amazon ECR
+4. Push Docker images to ECR repositories
+
+This ensures **consistency, automation, and scalability** across all builds.
+
+---
+
+## 🛠 Setup Steps
+
+### 1. Launch EC2 for Jenkins
+- Use Ubuntu 22.04
+- Install Jenkins + Java + Docker
+- Open ports:
+  - `8080` → Jenkins UI
+  - `22` → SSH
+ 
+  ### Screenshots
+  <img width="1417" height="876" alt="image" src="https://github.com/user-attachments/assets/1f8236a6-6d5f-412a-80e2-5ed650f3904e" />
+
+
+### 2. Configure Jenkins
+- Install required plugins:
+  - **GitHub**
+  - **Pipeline**
+  - **Docker Pipeline**
+  - **Amazon ECR**
+  - **AWS Credentials**
+- Add AWS credentials under **Manage Jenkins → Credentials**
+
+### 3. Jenkins Pipeline
+A `Jenkinsfile` in the repo defines the pipeline:
+
+```groovy
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') { ... }
+        stage('Build Docker Images') { ... }
+        stage('Login to ECR') { ... }
+        stage('Tag & Push to ECR') { ... }
+    }
+}
+```
+
+# Run the Pipeline
+<img width="1591" height="960" alt="image" src="https://github.com/user-attachments/assets/55894486-ee88-4a0d-b9c1-4c56b599309a" />
+
+<img width="1238" height="751" alt="image" src="https://github.com/user-attachments/assets/3f5d82ee-4106-41bf-bcd4-3ba65970964d" />
+
+------
+
+
+
 

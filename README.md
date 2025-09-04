@@ -278,7 +278,75 @@ python3 infra_setup.py
 
 ---------
 
+# Deploying Backend Services on EC2 with Auto Scaling Group (ASG)
+## Launch Template
+- Created a Launch Template with:
+
+- Base Amazon Linux 2 AMI.
+
+- User Data script that:
+
+- Installs Docker.
+
+- Authenticates with Amazon ECR.
+
+- Pulls backend Docker images.
+
+- Runs the containers:
+
+## Auto Scaling Group (ASG)
+
+- Attached the Launch Template to an ASG for high availability.
+
+- Configured:
+
+- Min capacity = 1
+
+- Max capacity = 3
+
+- Health checks via EC2 status.
+
+# Networking with Load Balancer & DNS
+
+- In this step, we expose the services to the internet using an Application Load Balancer (ALB).
+
+## Target Group
+
+- Created a Target Group for backend services.
+
+- Registered EC2 instances from the ASG.
+
+- Configured health checks:
+
+- Protocol: HTTP
+
+- Port: 3001 (hello-service) / 3002 (profile-service)
+
+- Path: /
+
+# Application Load Balancer (ALB)
+
+Created an ALB with:
+
+Internet-facing scheme
+
+Subnets: <your-existing-subnets-here>
+
+Security Group: allows inbound traffic on port 80.
+
+Listener Configuration:
+
+Port 80 → Forward to Target Group.
+
+# DNS Configuration
+
+## Obtained ALB DNS name: 
+```bash
+http://mernapp-alb-1600299037.ap-south-1.elb.amazonaws.com/
+```
+### Screenshots:
+<img width="857" height="588" alt="image" src="https://github.com/user-attachments/assets/f205204f-c412-4ac7-ac35-266ee4e2d119" />
 
 
-
+-----
 

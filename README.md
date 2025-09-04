@@ -273,6 +273,7 @@ python3 infra_setup.py
 
 ## running mern app with vpc id, subnet id, IAM Role, Asg ,  
 <img width="1703" height="825" alt="image" src="https://github.com/user-attachments/assets/183a0563-3828-4fd3-824a-9e07ee2cf42d" />
+<img width="966" height="265" alt="image" src="https://github.com/user-attachments/assets/41b376a8-5968-4975-8bc2-cdc36577b4de" />
 
 
 ---------

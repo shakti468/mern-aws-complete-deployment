@@ -234,6 +234,50 @@ pipeline {
 
 ------
 
+# Infrastructure as Code (IaC) with Boto3
+
+In this step, we automated the **AWS infrastructure setup** for our MERN microservices project using **Python (Boto3)**.  
+Instead of manually creating resources from the AWS Console, we wrote a script (`infra_setup.py`) to provision everything.
+
+---
+
+## 🔹 What This Script Does
+1. **Checks / Creates IAM Instance Profile**
+   - IAM Role already existed (`shakti-jenkins-ec2-iam`).
+   - Attached it to an **Instance Profile** (`shakti-jenkins-ec2-iam-profile`).
+
+2. **Launch Template**
+   - Defines EC2 instance configuration:
+     - Ubuntu AMI
+     - Instance type: `t3.micro`
+     - SSH Key: `Shakti-b10`
+     - Security Group: `sg-0e03c3accc395a435`
+     - IAM Instance Profile attached
+     - User Data script to install Docker and run app containers
+
+3. **Auto Scaling Group (ASG)**
+   - Ensures highly available backend.
+   - Launches EC2 instances in the given Subnet(s).
+   - Configured with min=1, max=3, desired=1.
+
+---
+
+## 🔹 Commands Used
+
+### Run the Python Script
+```bash
+python3 infra_setup.py
+```
+### Output screenshot
+<img width="1287" height="243" alt="image" src="https://github.com/user-attachments/assets/3f94b2dc-c26d-4885-8c62-13c7b99e42ec" />
+
+## running mern app with vpc id, subnet id, IAM Role, Asg ,  
+<img width="1703" height="825" alt="image" src="https://github.com/user-attachments/assets/183a0563-3828-4fd3-824a-9e07ee2cf42d" />
+
+
+---------
+
+
 
 
 

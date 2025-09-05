@@ -350,3 +350,68 @@ http://mernapp-alb-1600299037.ap-south-1.elb.amazonaws.com/
 
 -----
 
+# 🚀 MERN Application Deployment on AWS (EC2 + ALB + Lambda)
+
+This guide explains how to deploy a **MERN microservices application** on AWS using:
+
+- **EC2 (Auto Scaling Group + ALB)** → For backend & frontend  
+- **Lambda + S3** → For automated MongoDB backups  
+
+---
+
+## 🛠 Prerequisites
+
+- **AWS CLI v2** installed (`awscli2`)
+- **Docker** installed on EC2
+- An existing **VPC + Subnet IDs** (fill in your IDs where required)
+- **ECR repositories** created for:
+  - `hello-service`
+  - `profile-service`
+  - `mern-frontend`
+
+---
+
+## ⚙️ Step 1: Deploy Backend & Frontend on EC2 (with ALB)
+
+We use an **Auto Scaling Group (ASG)** + **Application Load Balancer (ALB)**.  
+Each EC2 instance runs both frontend and backend containers.
+
+### `deploy.sh` (Run on EC2 instances)
+
+```bash
+#!/bin/bash
+
+# Update & install docker + awscli2
+sudo apt update -y
+sudo apt install -y docker.io awscli2
+sudo systemctl enable docker
+sudo systemctl start docker
+
+# Add ubuntu user to docker group
+sudo usermod -aG docker $USER
+newgrp docker
+
+# Authenticate to ECR
+aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 975050024946.dkr.ecr.ap-south-1.amazonaws.com
+
+# Stop & clean old containers
+docker stop hello-service profile-service frontend || true
+docker rm hello-service profile-service frontend || true
+
+# Pull images
+docker pull 975050024946.dkr.ecr.ap-south-1.amazonaws.com/hello-service:latest
+docker pull 975050024946.dkr.ecr.ap-south-1.amazonaws.com/profile-service:latest
+docker pull 975050024946.dkr.ecr.ap-south-1.amazonaws.com/mern-frontend:latest
+
+# Run backend services
+docker run -d --name hello-service -p 3001:3001 975050024946.dkr.ecr.ap-south-1.amazonaws.com/hello-service:latest
+docker run -d --name profile-service -p 3002:3002 -e MONGO_URL="your-mongo-uri-here" 975050024946.dkr.ecr.ap-south-1.amazonaws.com/profile-service:latest
+
+# Run frontend service
+docker run -d --name frontend -p 3000:3000 975050024946.dkr.ecr.ap-south-1.amazonaws.com/mern-frontend:latest
+
+```
+## Access the app:
+```bash
+http://MERNApp-ALB-xyz.elb.ap-south-1.amazonaws.com
+```

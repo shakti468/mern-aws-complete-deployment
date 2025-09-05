@@ -415,3 +415,6 @@ docker run -d --name frontend -p 3000:3000 975050024946.dkr.ecr.ap-south-1.amazo
 ```bash
 http://MERNApp-ALB-xyz.elb.ap-south-1.amazonaws.com
 ```
+### Screenshots
+<img width="1498" height="920" alt="image" src="https://github.com/user-attachments/assets/5a27c5aa-ed1c-4b8e-8d0d-5faf9554a218" />
+
